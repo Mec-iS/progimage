@@ -11,16 +11,22 @@ As defined in requirements document
 
 ## Architecture
 The basic implementation is the work of three basic architectural modules: 
+
 A. a web server
+
 B. a key-value store
+
 C. a file system
 
 The tools/libraries used to implement these modules have been picked considering a trade-off in
  terms of time-effectiveness of the implementation and fitness to the requested operations.
  According to the [design principles](#design-principles) defined at the beginning of the task, the
  tools chosen, and relative motivations, have been:
+
 A. Starlette and Gunicorn: ASGI-native, functional style, fast, multi-process manager;
+
 B. sqlite: easy to deploy, relatively-fast SQL for average scale. a NoSQL or a cache would be fitter;
+
 C. a POSIX file system: the codebase uses Async File I/O on a regular filesystem, a third party
     cloud storage can be easily plugged-in.
 
