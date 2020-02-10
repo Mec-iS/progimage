@@ -12,7 +12,7 @@ class ProgImageClient(requests.Session):
     >>> # this above returns a unique id (uuid4)
     >>> client.get_storage(id='b1279bac-630e-4335-af0b-0d233550a4d5')
     """
-    URL = '127.0.0.1:8000'
+    URL = 'http://127.0.0.1:8000'
 
     def get_storage(self, **kwargs):
         """
@@ -22,15 +22,21 @@ class ProgImageClient(requests.Session):
         """
         assert 'id' in kwargs.keys(), 'Should specify "id" with unique id value'
         url = f'{self.URL}/storage/{kwargs["id"]}'
+        del kwargs['id']
+
         response = super().get(url, **kwargs)
+        print(response.headers, response.status_code)
         filename = response.headers['Content-Disposition'].split('filename="')[1]
         with open(filename[0:-1], 'wb+') as f:
             f.write(response.content)
+
+        return response
 
     def post_storage(self, **kwargs):
         assert 'image' in kwargs.keys(), 'Should specify "image" with image path or filename'
         name = os.path.basename(kwargs['image'])
         path_ = kwargs['image']
+        del kwargs['image']
 
         url = f'{self.URL}/storage/'
         try:
@@ -38,4 +44,4 @@ class ProgImageClient(requests.Session):
         except:
             assert False, 'Cannot find file. Cannot prepare request'
 
-        super().post(url, files=files)
+        return super().post(url, files=files)

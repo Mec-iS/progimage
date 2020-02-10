@@ -11,7 +11,7 @@ from starlette.responses import JSONResponse
 from aiofile import AIOFile
 
 from src.utils import error_response
-from src.config import FS_DIR
+from src.config import FS_DIR, SEPARATOR
 
 from src.config import logger
 
@@ -24,6 +24,7 @@ async def get(request):
     """
     # retrieve unique id
     uuid_ = request.path_params['id_']
+    if len(uuid_) != 36: return error_response('uuid is ot valid', 404)
 
     # retrieve record
     from src.models import select_from_index
@@ -38,7 +39,7 @@ async def get(request):
     if count != 1: return error_response('Wrong unique id', 404)
 
     # parse file data
-    filename = f'{uuid_}_{name}'
+    filename = f'{uuid_}{SEPARATOR}{name}'
     path_ = os.path.join(FS_DIR, filename)
     ext = name.split('.')[1]
 
@@ -53,13 +54,21 @@ async def post(request):
     :return: (starlette.Response.JSONResponse)
     """
     form = await request.form()
-    logger.debug(form)
-    uuid_ = str(uuid.uuid4())
-    filename = f'{uuid_}_{form["image"].filename}'
-    path_ = os.path.join(FS_DIR, filename)
+    filename = form["image"].filename
 
+    # handle same filename issues
+    if SEPARATOR in filename and len(filename.split(SEPARATOR)[0]) == 36:
+        # file has already a uuid in the filename
+        _, filename = tuple(filename.split(SEPARATOR))
+
+    # create a new record for this filename
+    uuid_ = str(uuid.uuid4())
     from src.models import insert_to_index
-    insert_to_index(form["image"].filename, uuid_)
+    insert_to_index(filename, uuid_)
+
+    # store the new filename
+    filename = f'{uuid_}{SEPARATOR}{filename}'
+    path_ = os.path.join(FS_DIR, filename)
 
     async with AIOFile(path_, 'ab+') as afp:
         contents = await form["image"].read()
