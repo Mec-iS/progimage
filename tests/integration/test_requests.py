@@ -21,6 +21,24 @@ class TestExternal(unittest.TestCase):
         self.f_descriptor = open(self.path_, 'rb')
         self.session = requests.Session()
 
+    def test_post_file_form_data(self):
+        name = os.path.basename(self.path_)
+        files = {'image': (name, self.f_descriptor, 'multipart/form-data', {'Expires': '0'})}
+
+        req = requests.Request(
+            method='POST',
+            url='http://localhost:8000/storage/',
+            files=files,
+        )
+        prepared = req.prepare()
+        print_request(logger, prepared)
+        response = self.session.send(prepared)
+
+        assert response.status_code == 200
+
+        json = response.json()
+        logger.debug(json)
+
     def test_post_get_file_form_data(self):
         name = os.path.basename(self.path_)
         files = {'image': (name, self.f_descriptor, 'multipart/form-data', {'Expires': '0'})}
@@ -49,7 +67,9 @@ class TestExternal(unittest.TestCase):
         response = self.session.send(prepared)
 
         logger.debug(response.status_code)
+        logger.debug(response.headers)
         assert response.status_code == 200
+        assert 'Content-Disposition' in response.headers.keys()
 
     def test_post_image_jpg(self):
         name = os.path.basename(self.path_)

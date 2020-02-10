@@ -3,5 +3,8 @@ gunicorn
 starlette[full]
 aiofile
 
+# image processing library
+# opencv-python
+
 pytest
 requests

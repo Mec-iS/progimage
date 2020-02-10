@@ -1,15 +1,24 @@
+"""
+ProgImage: a programmatic API to store and process images
+"""
 from starlette.applications import Starlette
 from starlette.responses import JSONResponse
 from starlette.staticfiles import StaticFiles
 from starlette.routing import Route, Mount
 
-from src.handlers import storage
+# import handlers
+import src.storage as storage
+import src.converter as converter
+
 from src.config import FS_DIR
 
 routes = [
     Mount('/storage', routes=[
-        Route('/', endpoint=storage, methods=['POST']),
-        Route('/{id_}', endpoint=storage, methods=['GET']),
+        Route('/', endpoint=storage.post, methods=['POST']),
+        Route('/{id_}', endpoint=storage.get, methods=['GET']),
+    ]),
+    Mount('/converter', routes=[
+        Route('/{id_}/{format}', endpoint=converter.format, methods=['GET']),
     ])
 ]
 
