@@ -21,7 +21,7 @@ class TestExternal(unittest.TestCase):
         self.f_descriptor = open(self.path_, 'rb')
         self.session = requests.Session()
 
-    def test_post_file_form_data(self):
+    def test_post_get_file_form_data(self):
         name = os.path.basename(self.path_)
         files = {'image': (name, self.f_descriptor, 'multipart/form-data', {'Expires': '0'})}
 
@@ -33,7 +33,23 @@ class TestExternal(unittest.TestCase):
         prepared = req.prepare()
         print_request(logger, prepared)
         response = self.session.send(prepared)
-        logger.debug(response.json())
+
+        assert response.status_code == 200
+
+        json = response.json()
+        logger.debug(json)
+
+        req = requests.Request(
+            method='GET',
+            url=f'http://localhost:8000/storage/{json["id"]}',
+        )
+
+        prepared = req.prepare()
+        print_request(logger, prepared)
+        response = self.session.send(prepared)
+
+        logger.debug(response.status_code)
+        assert response.status_code == 200
 
     def test_post_image_jpg(self):
         name = os.path.basename(self.path_)

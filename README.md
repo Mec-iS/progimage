@@ -23,6 +23,8 @@ As defined in requirements document
 
 ## TODOs
 * use env variables with docker (debug flags, ...)
+* implement storing size of the files in index
+* move to `async_pg` as `sqlite3` has no async support 
 
 
 ## Build
