@@ -1,0 +1,7 @@
+uvicorn
+gunicorn
+starlette[full]
+aiofile
+
+pytest
+requests
