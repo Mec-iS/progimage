@@ -1,7 +1,7 @@
 #
 # uvicorn is a minimal low-level server/application interface for asyncio frameworks
 #
-uvicorn src:app
+venv/bin/uvicorn src:app
 
 #
 # Gunicorn is a mature, fully featured server and process manager.

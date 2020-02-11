@@ -50,29 +50,24 @@ C. a POSIX file system: the codebase uses Async File I/O on a regular filesystem
 * add `docker-compose` with multi-volume support 
 
 
-## Build
-Full build procedure:
-````
-$ python3.7 -m venv venv
-$ source venv/bin/activate
-$ pip install setuptools --upgrade
-$ pip install pip --upgrade
-$ pip install -r requirements.txt
-$ python src/models.py
-$ ./run.sh
-````
+## Build and run
+* _Requires Python3.7_
+* Run the installation script: `./install.sh`, this will create a virtual environment in `venv`
+* Run the local server: `./run_dev_server.sh`.
 
 ## Testing
-After building is possible to run unit tests or integration tests against the local server.
+After building is possible to run unit tests, or integration tests against the local server.
 
 ### unit test with pytest
 ```
 $ pytest tests/unit
 ```
+or simply `./run_unit_tests.sh`
 
 ### integration tests
-With a local instance running
+With a local instance running with `./run_dev_server.sh` type:
 ```
 $ python -m unittest tests.integration.test_requests.TestExternal
 ```
+or simply `./run_integration_tests.sh`
 
