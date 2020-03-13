@@ -37,6 +37,7 @@ C. a POSIX file system: the codebase uses Async File I/O on a regular filesystem
 * Database is assumed to be in a `db` directory that can be easily moved to a Docker volume
 * No third-party provider
 * use Python3.7+
+* implement images processing in Python using [FFI from Rust](https://www.benfrederickson.com/writing-python-extensions-in-rust-using-pyo3/)
 
 ## Challenges
 * use asynchronous programming
