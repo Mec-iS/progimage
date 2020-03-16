@@ -14,7 +14,9 @@ async def format(request):
 
 
 async def example_resize(request):
-    """Use an exemplary resize function"""
+    """Use an exemplary resize function.
+    Leveraging Rust image library <https://github.com/image-rs/image/blob/master/examples/scaleup>
+    """
     from cffi import FFI
     ffi = FFI()
     ffi.cdef('int rs_resize(const char *);')

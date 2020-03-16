@@ -11,6 +11,7 @@ name = "rs_imgproc"
 crate-type = ["cdylib"]
 
 [dependencies]
+libc = "0.2.67"
 image = "0.23.1"
 
 

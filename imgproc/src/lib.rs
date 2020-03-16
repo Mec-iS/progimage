@@ -34,6 +34,7 @@ impl fmt::Display for Elapsed {
 
 //
 // Example for resizing. FFI to be called from Python
+// Leveraging Rust image library <https://github.com/image-rs/image/blob/master/examples/scaleup>
 //
 #[no_mangle]
 pub extern "C" fn rs_resize_1024(input: *const c_char) -> c_int {
