@@ -2,6 +2,7 @@ uvicorn
 gunicorn
 starlette[full]
 aiofile
+cffi
 
 # image processing library
 # opencv-python
