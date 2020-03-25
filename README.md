@@ -50,13 +50,6 @@ C. a POSIX file system: the codebase uses Async File I/O on a regular filesystem
 * [Request object in Starlette](https://www.starlette.io/requests/#body)
 * [File handling in FastAPI](https://fastapi.tiangolo.com/tutorial/request-files/#file-parameters-with-uploadfile)
 
-## TODOs
-* use env variables with docker (debug flags, ...)
-* implement storing size of the files in key-value
-* move to `async_pg` or other aync driver as `sqlite3` has no native async support
-* add `docker-compose` with multi-volume support 
-
-
 ## Build and run
 * _Requires Python3.7_
 * Run the installation script: `./install.sh`, this will create a virtual environment in `venv`
@@ -77,4 +70,19 @@ With a local instance running with `./run_dev_server.sh` type:
 $ python -m unittest tests.integration.test_requests.TestExternal
 ```
 or simply `./run_integration_tests.sh`
+
+## TODOs
+* use env variables with docker (debug flags, ...)
+* implement storing size of the files in key-value
+* move to `async_pg` or other aync driver as `sqlite3` has no native async support
+* add `docker-compose` with multi-volume support
+
+## Scaling
+* consider [Python Streams Processing: Faust](https://github.com/robinhood/faust)
+* consider distributed message queue (ZeroMQ) for image processing, see ["Parallel Calculation of the Fourier Transform of an Image"](https://www.pythonforthelab.com/blog/using-pyzmq-for-inter-process-communication-part-1/)
+* Some links:
+    * [The Architecture of Open Source Applications](https://www.aosabook.org/en/zeromq.html)
+    * [Nanosurveyor: a framework for real-time data processing](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5313566/)
+    * [Distributing Complex Event Detection](https://www.doc.ic.ac.uk/teaching/distinguished-projects/2012/k.nagy.pdf)
+    * [Combining ZeroMQ & POSIX signals](https://blog.esciencecenter.nl/combining-zeromq-posix-signals-b754f6f29cd6)
 
