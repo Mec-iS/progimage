@@ -85,4 +85,4 @@ or simply `./run_integration_tests.sh`
     * [Nanosurveyor: a framework for real-time data processing](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5313566/)
     * [Distributing Complex Event Detection](https://www.doc.ic.ac.uk/teaching/distinguished-projects/2012/k.nagy.pdf)
     * [Combining ZeroMQ & POSIX signals](https://blog.esciencecenter.nl/combining-zeromq-posix-signals-b754f6f29cd6)
-
+* example of [images server library in Rust](https://github.com/imazen/imageflow)
